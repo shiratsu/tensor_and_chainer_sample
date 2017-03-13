@@ -1,0 +1,2 @@
+# tensor_and_chainer_sample
+tensorflowとchainerで遊ぶリポジトリ
