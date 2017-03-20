@@ -37,6 +37,11 @@ epoch       main/accuracy  validation/main/accuracy
 30          0.7            0.705294
 ```
 
+### chainerでの入力変数の渡し方
+```
+x = Variable(np.array(x, dtype=np.float32))
+```
+
 ## tensorでの結果
 ```
 I tensorflow/core/common_runtime/local_device.cc:40] Local device intra op parallelism threads: 8
