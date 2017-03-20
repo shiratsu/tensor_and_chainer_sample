@@ -34,7 +34,7 @@ X = np.array(X)
 Y = np.ndarray.flatten(np.array(Y))
 
 # print(X)
-# print(Y)
+print(Y)
 
 # 891個のデータのうち623個(7割)を訓練用データ、残りをテスト用データにする
 train, test = datasets.split_dataset_random(datasets.TupleDataset(X, Y), 623)

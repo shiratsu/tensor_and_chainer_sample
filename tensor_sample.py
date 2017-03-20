@@ -18,9 +18,9 @@ step_size = 1000     # 何ステップ学習するか
 
 # Network Parameters
 n_hidden_1 = 64      # 隠れ層1のユニットの数
-n_hidden_2 = 64      # 隠れ層2のユニットの数
-n_input = 5          # 与える変数の数
-n_classes = 1        # 分類するクラスの数 今回は生き残ったか否かなので2
+n_hidden_2 = 32      # 隠れ層2のユニットの数
+n_input = 4          # 与える変数の数
+n_classes = 2        # 分類するクラスの数 今回は生き残ったか否かなので2
 
 # csvファイルの読み込み
 df = pd.read_csv('train.csv', header=0)
@@ -29,15 +29,18 @@ df['Sex'] = labelEncoder.fit_transform(df['Sex'])
 # df['Cabin'] = labelEncoder.fit_transform(df['Cabin'])
 # df['Embarked'] = labelEncoder.fit_transform(df['Embarked'])
 
-x_np = np.array(df[['Pclass', 'Sex', 'Age', 'Parch' ,'Fare']].fillna(0))
-d = df[['Survived']].to_dict('record')
+#x_np = np.array(df[['Pclass', 'Sex', 'Age', 'Parch' ,'Fare']].fillna(0))
+# x_np = np.array(df[['Pclass', 'Sex', 'Age' ,'Fare']].fillna(0))
+x_np = np.array(df[['Pclass', 'Sex', 'Age' ,'Fare']].fillna(0))
+d = df[['SurvivedText']].to_dict('record')
 vectorizer = DictVectorizer(sparse=False)
+print(d)
 y_np = vectorizer.fit_transform(d)
+print(y_np)
+[x_train, x_test] = np.vsplit(x_np, [train_size]) # 入力データを訓練データとテストデータに分ける
+[y_train, y_test] = np.vsplit(y_np, [train_size]) # ラベルを訓練データをテストデータに分ける
 
-# [x_train, x_test] = np.vsplit(x_np, [train_size]) # 入力データを訓練データとテストデータに分ける
-# [y_train, y_test] = np.vsplit(y_np, [train_size]) # ラベルを訓練データをテストデータに分ける
-
-x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, random_state=0)
+#x_train, x_test, y_train, y_test = train_test_split(x_np, y_np, test_size=0.3, random_state=0)
 
 # tf Graph input
 x = tf.placeholder("float", [None, n_input])
