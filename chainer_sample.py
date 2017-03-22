@@ -33,7 +33,7 @@ for x in data_array:
 X = np.array(X)
 Y = np.ndarray.flatten(np.array(Y))
 
-# print(X)
+print(X)
 print(Y)
 
 # 891個のデータのうち623個(7割)を訓練用データ、残りをテスト用データにする
@@ -50,16 +50,16 @@ class MLP(Chain):
         )
 
     def __call__(self, x):
-        # print(x)
+        print(x)
+        # print("----------------------called---------------------------")
         h1 = F.relu(self.l1(x))
         h2 = F.relu(self.l2(h1))
         y = self.l3(h2)
         return y
 
 model = L.Classifier(MLP())
-optimizer = optimizers.SGD()
+optimizer = optimizers.Adam()
 optimizer.setup(model)
-
 updater = training.StandardUpdater(train_iter, optimizer)
 trainer = training.Trainer(updater, (30, 'epoch'), out='result')
 
