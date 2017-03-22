@@ -1,6 +1,7 @@
 # coding: UTF-8
 import operator
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
 # 生徒の国語・数学・英語の各得点を配列として与える
@@ -60,3 +61,39 @@ newlist = zip(labels, features)
 sortedList = sorted(newlist, key=lambda pair: pair[0])
 for label, feature in sortedList:
     print(label, feature, feature.sum(),feature.mean())
+
+
+# さらに５つのグループに分けてみる
+# K-means クラスタリングをおこなう
+# この例では 3 つのグループに分割 (メルセンヌツイスターの乱数の種を 10 とする)
+kmeans_model = KMeans(n_clusters=5, random_state=10).fit(features)
+
+# 分類先となったラベルを取得する
+labels = kmeans_model.labels_
+
+# ラベル (班) 、成績、三科目の合計得点を表示する
+# for label, feature in zip(labels, features):
+#     print(label, feature, feature.sum())
+
+# ソートして出力
+newlist = zip(labels, features)
+sortedList = sorted(newlist, key=lambda pair: pair[0])
+for label, feature in sortedList:
+    print(label, feature, feature.sum(),feature.mean())
+
+
+
+distortions = []
+for i  in range(1,11):                # 1~10クラスタまで一気に計算
+    km = KMeans(n_clusters=i,
+                init='k-means++',     # k-means++法によりクラスタ中心を選択
+                n_init=10,
+                max_iter=300,
+                random_state=0)
+    km.fit(features)                         # クラスタリングの計算を実行
+    distortions.append(km.inertia_)   # km.fitするとkm.inertia_が得られる
+
+# plt.plot(range(1,11),distortions,marker='o')
+# plt.xlabel('Number of clusters')
+# plt.ylabel('Distortion')
+# plt.show()
