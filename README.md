@@ -59,3 +59,21 @@ Epoch: 0010 cost= 0.371005500
 Optimization Finished!
 Accuracy: 0.736264
 ```
+
+## SVMの結果の評価
+
+### 正解率(Accuracy)
+予測のうち、正しく分類されたものの割合
+
+### 適合率(Precision)
+正と予測したデータのうち，実際に正であるものの割合
+
+### 再現率(Recall)
+実際に正であるもののうち，正であると予測されたものの割合
+
+### F値(F-measure)
+精度と再現率の調和平均
+
+## grid search
+分類モデルの最適なパラメータを見つける
+http://blog.tatsushim.com/?p=63
