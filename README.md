@@ -77,3 +77,28 @@ Accuracy: 0.736264
 ## grid search
 分類モデルの最適なパラメータを見つける
 http://blog.tatsushim.com/?p=63
+
+# grid searchの結果
+結果の意味はあとで確認
+```
+~/chainer_sample on  master! ⌚ 13:16:34
+$ python3 bank_predict_gridsearch.py                                                                                                                                                     2.3.1
+/usr/local/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+/usr/local/lib/python3.6/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
+  DeprecationWarning)
+             precision    recall  f1-score   support
+
+         no       0.93      0.97      0.95     11998
+        yes       0.63      0.44      0.52      1566
+
+avg / total       0.90      0.91      0.90     13564
+
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=40, max_features=15, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=10, min_weight_fraction_leaf=0.0,
+            n_estimators=100, n_jobs=1, oob_score=False,
+            random_state=<mtrand.RandomState object at 0x111b65360>,
+            verbose=0, warm_start=False)
+```
