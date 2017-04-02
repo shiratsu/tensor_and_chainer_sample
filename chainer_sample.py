@@ -50,7 +50,8 @@ class MLP(Chain):
         )
 
     def __call__(self, x):
-        print(x)
+        print(x.data)
+        print(x.name)
         # print("----------------------called---------------------------")
         h1 = F.relu(self.l1(x))
         h2 = F.relu(self.l2(h1))
