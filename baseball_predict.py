@@ -15,16 +15,16 @@ class BaseBallChain(Chain):
 
         # この場合は層が４つで出力層（４つ目が出力層）
         super(BaseBallChain, self).__init__(
-            l1 = L.Linear(33, 32),
-            l2 = L.Linear(32, 1)
+            l1 = L.Linear(33, 20),
+            l2 = L.Linear(20, 1)
         )
     # def __call__(self, x):
     #     z1 = F.relu(self.l1(x))
     #     return self.l2(z1)
 
     def predict(self, x):
-        print("--------------------------xのデータ----------------------------------------")
-        print(x.data)
+        # print("--------------------------xのデータ----------------------------------------")
+        # print(x.data)
         z1 = F.relu(self.l1(x))
         return self.l2(z1)
 
@@ -54,6 +54,12 @@ def forward(x, y, model):
     # 予測値を計算
     t = model.predict(x)
     # 誤差を出す
+    # print("----------y_real------------")
+    # print(y.data)
+    # print("----------y_real------------")
+    # print("----------t_real------------")
+    # print(t.data)
+    # print("----------t_real------------")
     loss = F.mean_squared_error(t, y)
     return loss
 
@@ -75,3 +81,14 @@ for i in range(0,1000):
     loss = forward(x, y, model) # 順伝播
     print(loss.data)  # 現状のMSEを表示
     optimizer.update(forward, x, y, model) # 逆伝播
+
+# あとはテストパラメータで試してみる
+# 誤差が小さければ、多分正しいはず
+xtest = Variable(score_test)
+ytest = Variable(salary_test)
+ypredict = model.predict(xtest)
+print(ypredict.data)
+print(salary_test)
+
+loss = F.mean_squared_error(ypredict, ytest)
+print(loss.data)
