@@ -1,5 +1,7 @@
 # coding: utf-8
 import numpy as np
+import random
+
 import pandas as pd
 import chainer
 from chainer import Variable,training
@@ -15,8 +17,9 @@ class BaseBallChain(Chain):
 
         # この場合は層が４つで出力層（４つ目が出力層）
         super(BaseBallChain, self).__init__(
-            l1 = L.Linear(33, 20),
-            l2 = L.Linear(20, 1)
+            l1 = L.Linear(33, 40),
+            l2= L.Linear(40, 5),
+            l3= L.Linear(5, 1),
         )
     # def __call__(self, x):
     #     z1 = F.relu(self.l1(x))
@@ -25,8 +28,15 @@ class BaseBallChain(Chain):
     def predict(self, x):
         # print("--------------------------xのデータ----------------------------------------")
         # print(x.data)
-        z1 = F.relu(self.l1(x))
-        return self.l2(z1)
+        h1 = F.relu(self.l1(x))
+        h2 = F.relu(self.l2(h1))
+        y = self.l3(h2)
+        return y
+
+# 乱数のシードを固定
+random.seed(1)
+np.random.seed(1)
+
 
 TRAIN_DATA_SIZE = 90
 
@@ -46,6 +56,7 @@ score_test = score_test.astype(np.float32)
 model = BaseBallChain()
 
 
+
 # 損失関数の計算
 # 損失関数には自乗誤差(MSE)を使用
 # 評価関数 = 損失関数
@@ -53,13 +64,6 @@ def forward(x, y, model):
     # print(x.data)
     # 予測値を計算
     t = model.predict(x)
-    # 誤差を出す
-    # print("----------y_real------------")
-    # print(y.data)
-    # print("----------y_real------------")
-    # print("----------t_real------------")
-    # print(t.data)
-    # print("----------t_real------------")
     loss = F.mean_squared_error(t, y)
     return loss
 
@@ -75,7 +79,7 @@ optimizer.setup(model)
 
 # パラメータの学習を繰り返す
 # 1000回繰り返す
-for i in range(0,1000):
+for i in range(0,450):
     x = Variable(score_train)
     y = Variable(salary_train)
     loss = forward(x, y, model) # 順伝播
